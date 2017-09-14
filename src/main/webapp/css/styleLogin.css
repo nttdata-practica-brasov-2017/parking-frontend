@@ -1,0 +1,43 @@
+
+.alignment{
+ /* position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);*/
+  max-width: 30%;
+  margin: auto;
+  background-color: rgb(255, 203, 96);
+  border-color: black;
+  border-style: solid;
+}
+
+.noDisplay{
+display: none;	
+}
+.mom{
+	background-color: rgba(255, 203, 96,0.5);
+}
+
+.login{
+	text-align:center;
+	font: bold;
+}
+
+.marg{
+	margin-left: 30%;
+	margin-right: 30%;
+}
+
+.buton{
+    margin-left: 30%;
+	margin-right: 30%;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	background-color: rgb(255, 203, 96);
+}
+
+.styleForHead{
+	text-align: center;
+	width: 100%;
+    height: 100%;
+	font-size: 25px;
+}

@@ -1,0 +1,115 @@
+
+#div-Mom{
+	background-color: lightblue;
+	height: 530px;
+	width: 350px;
+	margin-left: 60px;
+	margin-top: 40px;
+	border-color: black;
+	border-style: solid;
+	text-align: center;	
+	float:left;
+}
+
+#div-b{
+	background-color: lightgreen;
+	height: 225px;
+	width: 300px;
+	margin-left: 25px;
+	margin-right: 25px;
+	margin-top: 50px;
+	line-height: 210px;
+	border-color: black;
+	border-style: solid;
+}
+
+#div-c{
+	background-color: lightsalmon;
+	height: 150px;
+	width: 300px;
+	margin-left: 25px;
+	margin-right: 25px;
+	line-height: 160px;
+	border-color: black;
+	border-style: solid;
+}
+
+#div-a{
+	background-color: lightblue;
+	line-height: 50px;
+	padding: 20px, 0px;
+}
+
+#div-Mom2{
+	background-color: lightblue;
+	height: 600px;
+	width: 350px;
+	margin-left: 60px;
+	margin-top: 40px;
+	border-color: black;
+	border-style: solid;
+	text-align: center;	
+	float:left;
+}
+
+#div-2b{
+	background-color: lightgreen;
+	height: 350px;
+	width: 300px;
+	margin-left: 25px;
+	margin-right: 25px;
+	margin-top: 50px;
+	line-height: 250px;
+	border-color: black;
+	border-style: solid;
+	visibility: hidden;
+}
+
+#div-2c{
+	background-color: lightsalmon;
+	height: 100px;
+	width: 300px;
+	margin-left: 25px;
+	margin-right: 25px;
+	margin-top: 50px;
+	line-height: 100px;
+	border-color: black;
+	border-style: solid;
+}
+
+#div-Mom3{
+	background-color: lightblue;
+	height: 600px;
+	width: 350px;
+	margin-left: 60px;
+	margin-top: 40px;
+	border-color: black;
+	border-style: solid;
+	text-align: center;	
+	float:left;
+}
+
+#div-3b{
+	background-color: lightgreen;
+	height: 250px;
+	width: 300px;
+	margin-left: 25px;
+	margin-right: 25px;
+	margin-top: 50px;
+	line-height: 250px;
+	border-color: black;
+	border-style: solid;
+}
+
+#div-3c{
+	background-color: lightsalmon;
+	height: 200px;
+	width: 300px;
+	margin-left: 25px;
+	margin-right: 25px;
+	margin-top: 50px;
+	line-height: 100px;
+	border-color: black;
+	border-style: solid;
+}
+
