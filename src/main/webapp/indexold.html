@@ -1,28 +1,24 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <title>Login Ntt</title>
-	<link rel="stylesheet" href="css/styleLogin.css"> 
-	
-<script src="js/example.js"></script>
-</head>
-<body class="mom">
-<div class="styleForHead">
-<h1>Welcome</h1>
-</div>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Login Ntt</title>
+		<link rel="stylesheet" href="css/styleLogin.css">
+		<script src="js/example.js"></script>
+	</head>
 
-<div class="alignment">
-    <h2 class="login" >Login</h2>
-	<p  class="marg"  class="noDisplay"  id="isConnect"/>
-	<p class="marg"id="pUsername">Username</p>
-	<input class="marg" type="text" id="usernameText" /> <br>
-	<p class="marg" class="noDisplay"  id="withoutUsername"></p>
-	<p  class="marg" id="pPassword">Password</p>
-	<input class="marg" type="password" id="passwordText" /> <br>
-	<p  class="marg" class="noDisplay" id="withoutPass"></p>
+	<body>
+		<h1 class="styleForHead">Welcome</h1>
 	
-	<Button class="buton"id="submitButton" onclick="submitButton()">Submit</Button>
-</div>
-
-</body>
+		<div class="alignment">
+			<form>
+				<h2 class="login" >Login</h2>
+				<label for="usernameText" class="marg" id="pUsername">Username</label>
+				<input class="marg" type="text" id="usernameText" /> <br>
+				<label for="passwordText" class="marg" id="pPassword">Password</label>
+				<input class="marg" type="password" id="passwordText" /> <br>
+				<Button id="submitButton" onclick="submitButton()">Submit</Button>
+			</form>
+		</div>
+	</body>
 </html>
