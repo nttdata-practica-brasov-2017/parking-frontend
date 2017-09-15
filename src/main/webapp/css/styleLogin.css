@@ -8,6 +8,11 @@
   background-color: rgb(255, 203, 96);
   border-color: black;
   border-style: solid;
+  display: none;
+}
+
+#contentAlignment {
+	max-width: 80%;
 }
 
 .noDisplay{
