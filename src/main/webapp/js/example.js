@@ -105,13 +105,19 @@ function loginCheck () {
 	} else {
 		if (user.value == validUser && pass.value == validPass) {
 			isLogedIn();
-		};
+			document.getElementById('errorMessage').innerHTML = "";
+		} else {
+			document.getElementById('errorMessage').innerHTML = "User sau parola incorcta!";
+		}
 	}
 }
 
 function onClickPass () {
-	document.getElementById('passwordText2').style.display = 'none';
-	document.getElementById('passwordText1').style.display = 'block';
+	//document.getElementById('passwordText2').style.display = 'none';
+	//document.getElementById('passwordText1').style.display = 'block';
+	visibility('passwordText1', 'block');
+	visibility('passwordText2', 'none');
+
 	document.getElementById('passwordText1').focus();
 	document.getElementById('pPassword').style.color = "black";
 	document.getElementById('submitButton').style.backgroundColor = "transparent";
@@ -130,13 +136,54 @@ function setColorAndDisplay (id, color, display) {
 }
 
 function isLogedIn () {
-	document.getElementById('loginAlignment').style.display = 'none';
-	document.getElementById('contentAlignment').style.display = 'block';
-	document.getElementById('contentAlignment').innerHTML = "<h2>Hello " + document.getElementById('usernameText').value + " !</h2>";
+	//document.getElementById('loginAlignment').style.display = 'none';
+	//document.getElementById('contentAlignment').style.display = 'block';
+	visibility('loginAlignment', 'none');
+	visibility('contentAlignment', 'block');
+
+	// TODO at a later point:  create generic functions
+	// show('loginAlignment');
+	// hide('contentAlignment');
+
+
+	var user = {};
+	user.name = 'Vasile';
+	user.hasParking = true;
+	
+/*
+	var user = {};
+	user.name = 'Ioana';
+	user.hasParking = false;
+*/	
+
+
+	document.getElementById('contentAlignment').innerHTML = "<h2>Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"isLogedOut();\"></input></h2>";
+	
+	// TODO 
+	// show hide/content based on user.hasParking s
+
+	if (user.hasParking) {
+		document.getElementById("contentAlignment").innerHTML += '<object type="type/html" data="html/with-parking.html" ></object>';
+	} else {
+		document.getElementById("contentAlignment").innerHTML += '<object type="type/html" data="html/without-parking.html" ></object>';
+	}
+
+
 	return true;
+
 }
 
 function isLogedOut () {
-	document.getElementById('loginAlignment').style.display = 'block';
-	document.getElementById('contentAlignment').style.display = 'none';
+	//document.getElementById('loginAlignment').style.display = 'block';
+	visibility('loginAlignment', 'block');
+	//document.getElementById('contentAlignment').style.display = 'none';
+	visibility('contentAlignment', 'none');
+
+	document.getElementById('usernameText').value = "";
+	document.getElementById('passwordText1').value = "";
+	
+}
+
+function visibility (id, atribute) {
+	document.getElementById(id).style.display = atribute;
 }
