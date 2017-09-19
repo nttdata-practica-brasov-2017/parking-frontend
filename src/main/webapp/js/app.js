@@ -181,20 +181,28 @@ function isLogedIn () {
 */	
 	var str = "<h2>Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"isLogedOut();\"></input></h2>";
 	$('#welcomeMessage').html(str);
-	//document.getElementById('contentAlignment').innerHTML = "<h2>Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"isLogedOut();\"></input></h2>";
 	
 	// TODO 
 	// show hide/content based on user.hasParking s
+	function toggleState() {
+		if (user.hasParking) {
+			$('#withoutParking').hide();
+	        $('#withParking').show();
 
-	if (user.hasParking) {
-        $('#withParking').load('html/with-parking.html');
-		//document.getElementById("contentAlignment").innerHTML += '<object type="type/html" data="html/with-parking.html" ></object>';
-	} else {
-		//document.getElementById("contentAlignment").innerHTML += '<object type="type/html" data="html/without-parking.html" ></object>';
+	        $(document).ready(function() {
+    			$('#claimButton').DataTable();
+			} );
+		} else if (user.hasParking == false) {
+			$('#withoutParking').show();
+	        $('#withParking').hide();
+
+		}
 	}
 
 
-	return true;
+
+
+	return false;
 
 }
 
