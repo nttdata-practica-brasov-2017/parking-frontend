@@ -162,8 +162,6 @@ function setColorAndDisplay (id, color, display) {
 }
 
 function isLogedIn () {
-	//document.getElementById('loginAlignment').style.display = 'none';
-	//document.getElementById('contentAlignment').style.display = 'block';
 	visibility('loginAlignment', 'none');
 	visibility('contentAlignment', 'block');
 
@@ -199,6 +197,11 @@ function isLogedIn () {
 		}
 	}
 
+	if (user.hasParking) {
+        $('#withParking').load('html/with-parking.html', toggleState);
+	} else if (user.hasParking == false) {
+		$('#withoutParking').load('html/without-parking.html', toggleState);
+	}
 
 
 
@@ -207,9 +210,7 @@ function isLogedIn () {
 }
 
 function isLogedOut () {
-	//document.getElementById('loginAlignment').style.display = 'block';
 	visibility('loginAlignment', 'block');
-	//document.getElementById('contentAlignment').style.display = 'none';
 	visibility('contentAlignment', 'none');
 
 	document.getElementById('usernameText').value = "";
