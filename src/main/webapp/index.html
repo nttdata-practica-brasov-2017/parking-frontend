@@ -34,14 +34,14 @@
 	
 			<div id="contentAlignment">
 				<div id="welcomeMessage"></div>
-				<div id="withParking">
-				</div>
+				<div id="withParking"></div>
+				<div id="withoutParking"></div>
 			</div>
 		</div>
 
 		<script type="text/javascript">
 			
-			if (!isLogedIn()) {
+			if (isLogedIn()) {
 				isLogedIn();
 			} else {
 				isLogedOut();
