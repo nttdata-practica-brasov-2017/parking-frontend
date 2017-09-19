@@ -1,3 +1,5 @@
+user = {};
+
 /*function submitButton(){
 	var valueOfUsernameText = document.getElementById("usernameText").value;
 	var valueOfPasswordText=document.getElementById("passwordText").value;
@@ -103,12 +105,36 @@ function loginCheck () {
 			setColorAndDisplay('pPassword', 'red', undefined);
 		};
 	} else {
+        var url = 'http://localhost:8080/backend/login';
+        var data = {username:user.value, password: pass.value};
+		$.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify(data),
+			success: function(data) {
+				if (data.username) {
+                    user.name = data.firstName + " " + data.lastName;
+                    user.hasParking = data.type  == 'PERMANENT';
+                    isLogedIn();
+                    document.getElementById('errorMessage').innerHTML = "";
+				}
+			},
+			error: function(data) {
+                document.getElementById('errorMessage').innerHTML = "User sau parola incorcta!";
+			},
+			headers: {
+                "content-type": "application/json",
+                "cache-control": "no-cache"
+            }
+        });
+
+		/*
 		if (user.value == validUser && pass.value == validPass) {
-			isLogedIn();
-			document.getElementById('errorMessage').innerHTML = "";
+
 		} else {
 			document.getElementById('errorMessage').innerHTML = "User sau parola incorcta!";
 		}
+		*/
 	}
 }
 
@@ -146,26 +172,25 @@ function isLogedIn () {
 	// hide('contentAlignment');
 
 
-	var user = {};
-	user.name = 'Vasile';
-	user.hasParking = true;
+
 	
 /*
 	var user = {};
 	user.name = 'Ioana';
 	user.hasParking = false;
 */	
-
-
-	document.getElementById('contentAlignment').innerHTML = "<h2>Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"isLogedOut();\"></input></h2>";
+	var str = "<h2>Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"isLogedOut();\"></input></h2>";
+	$('#welcomeMessage').html(str);
+	//document.getElementById('contentAlignment').innerHTML = "<h2>Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"isLogedOut();\"></input></h2>";
 	
 	// TODO 
 	// show hide/content based on user.hasParking s
 
 	if (user.hasParking) {
-		document.getElementById("contentAlignment").innerHTML += '<object type="type/html" data="html/with-parking.html" ></object>';
+        $('#withParking').load('html/with-parking.html');
+		//document.getElementById("contentAlignment").innerHTML += '<object type="type/html" data="html/with-parking.html" ></object>';
 	} else {
-		document.getElementById("contentAlignment").innerHTML += '<object type="type/html" data="html/without-parking.html" ></object>';
+		//document.getElementById("contentAlignment").innerHTML += '<object type="type/html" data="html/without-parking.html" ></object>';
 	}
 
 

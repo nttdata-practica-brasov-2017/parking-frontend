@@ -1,28 +1,28 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Login Ntt</title>
+		<title>Login Ntt ss</title>
 		<link rel="stylesheet" href="css/styleLogin.css">
-		<script src="js/example.js"></script>
+		<script src="js/app.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	</head>
 
 	<body>
-	<script type="text/javascript"></script>
-		<h1 class="styleForHead">Welcome</h1>
-		
 		<div class="content">
-			<div class="alignment" id="loginAlignment">
+			<div class="login" id="loginAlignment">
+				<header class="login-header">
+					<span class="text">LOGIN</span><span class="loader"></span>
+				</header>
 				<form name="loginForm">
-					<h2 class="login" >Login</h2>
 					<label for="usernameText" class="marg" id="pUsername">Username</label>
-					<input class="marg" type="text" id="usernameText" name="fname" autofocus /> <br>
+					<input class="login-input" type="text" id="usernameText" name="fname" autofocus /> <br>
 					<label for="passwordText" class="marg" id="pPassword">Password</label>
-					<input class="marg" type="password" id="passwordText1" name="fpass" /> <br>
-					<input class="marg" type="text" id="passwordText2" name="fpass2" /> <br>
+					<input class="login-input" type="password" id="passwordText1" name="fpass" /> <br>
+					<input class="login-input" type="text" id="passwordText2" name="fpass2" /> <br>
 					
 					<script type="text/javascript">
 					document.getElementById('passwordText2').style.display='none';
@@ -32,8 +32,10 @@
 				</form>
 			</div>
 	
-			<div class="alignment" id="contentAlignment">
-
+			<div id="contentAlignment">
+				<div id="welcomeMessage"></div>
+				<div id="withParking">
+				</div>
 			</div>
 		</div>
 
