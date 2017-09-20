@@ -1,115 +1,147 @@
 
-#div-Mom{
-	background-color: lightblue;
-	height: 530px;
-	width: 350px;
-	margin-left: 60px;
-	margin-top: 40px;
-	border-color: black;
-	border-style: solid;
-	text-align: center;	
-	float:left;
+* {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-#div-b{
-	background-color: lightgreen;
-	height: 225px;
-	width: 300px;
-	margin-left: 25px;
-	margin-right: 25px;
-	margin-top: 50px;
-	line-height: 210px;
-	border-color: black;
-	border-style: solid;
+body {
+	background: white;
+	font: 100%/1 "Helvetica Neue", Arial, sans-serif;
 }
 
-#div-c{
-	background-color: lightsalmon;
-	height: 150px;
-	width: 300px;
-	margin-left: 25px;
-	margin-right: 25px;
-	line-height: 160px;
-	border-color: black;
-	border-style: solid;
+
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -10rem 0 0 -10rem;
+  width: 20rem;
+  height: 20rem;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
-#div-a{
-	background-color: lightblue;
-	line-height: 50px;
-	padding: 20px, 0px;
+.login:hover > .login-header, .login.focused > .login-header {
+  width: 2rem;
+}
+.login:hover > .login-header > .text, .login.focused > .login-header > .text {
+  font-size: 1rem;
+  transform: rotate(-90deg);
+}
+.login.loading > .login-header {
+  width: 20rem;
+}
+.login.loading > .login-header > .text {
+  display: none;
+}
+.login.loading > .login-header > .loader {
+  display: block;
 }
 
-#div-Mom2{
-	background-color: lightblue;
-	height: 600px;
-	width: 350px;
-	margin-left: 60px;
-	margin-top: 40px;
-	border-color: black;
-	border-style: solid;
-	text-align: center;	
-	float:left;
+.login-header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20rem;
+  height: 20rem;
+  background: orange;
+  transition: width 0.5s ease-in-out;
+}
+.login-header > .text {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 5rem;
+  text-align: center;
+  line-height: 20rem;
+  color: #fff;
+  transition: all 0.5s ease-in-out;
+}
+.login-header > .loader {
+  display: none;
+  position: absolute;
+  left: 5rem;
+  top: 5rem;
+  width: 10rem;
+  height: 10rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  animation: loading 2s linear infinite;
+}
+.login-header > .loader:after {
+  content: "";
+  position: absolute;
+  left: 4.5rem;
+  top: -0.5rem;
+  width: 1rem;
+  height: 1rem;
+  background: #fff;
+  border-radius: 50%;
+  border-right: 2px solid orange;
+}
+.login-header > .loader:before {
+  content: "";
+  position: absolute;
+  left: 4rem;
+  top: -0.5rem;
+  width: 0;
+  height: 0;
+  border-right: 1rem solid #fff;
+  border-top: 0.5rem solid transparent;
+  border-bottom: 0.5rem solid transparent;
 }
 
-#div-2b{
-	background-color: lightgreen;
-	height: 350px;
-	width: 300px;
-	margin-left: 25px;
-	margin-right: 25px;
-	margin-top: 50px;
-	line-height: 250px;
-	border-color: black;
-	border-style: solid;
-	visibility: hidden;
+
+#contentAlignment {
+	max-width: 80%;
 }
 
-#div-2c{
-	background-color: lightsalmon;
-	height: 100px;
-	width: 300px;
-	margin-left: 25px;
-	margin-right: 25px;
-	margin-top: 50px;
-	line-height: 100px;
-	border-color: black;
-	border-style: solid;
+.noDisplay{
+display: none;	
+}
+.login-input {
+  display: block;
+  width: 100%;
+  font-size: 25px;
+  padding: 0.5rem 1rem;
+  box-shadow: none;
+  border-color: #ccc;
+  border-width: 0 0 2px 0;
+}
+.login-input + .login-input {
+  margin: 10px 0 0;
+}
+.login-input:focus {
+  outline: none;
+  border-bottom-color: orange;
 }
 
-#div-Mom3{
-	background-color: lightblue;
-	height: 600px;
-	width: 350px;
-	margin-left: 60px;
-	margin-top: 40px;
-	border-color: black;
-	border-style: solid;
-	text-align: center;	
-	float:left;
+.login{
+	text-align: center;
 }
 
-#div-3b{
-	background-color: lightgreen;
-	height: 250px;
-	width: 300px;
-	margin-left: 25px;
-	margin-right: 25px;
-	margin-top: 50px;
-	line-height: 250px;
-	border-color: black;
-	border-style: solid;
+.marg{
+	margin-left: 30%;
+	margin-right: 30%;
 }
 
-#div-3c{
-	background-color: lightsalmon;
-	height: 200px;
-	width: 300px;
-	margin-left: 25px;
-	margin-right: 25px;
-	margin-top: 50px;
-	line-height: 100px;
-	border-color: black;
-	border-style: solid;
+#submitButton{
+    margin-left: 30%;
+	margin-right: 30%;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	background-color: rgb(255, 203, 96);
 }
 
+#logoutButton{
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+
+
+.white {
+  color : white;
+}

@@ -19,26 +19,17 @@ function loginCheck () {
 	if (isEmpty(inputUsername) || isEmpty(pass)) {
 		if (isEmpty(inputUsername)) {
 			user.value = "Acest camp trebuie completat!";
-			//document.getElementById('usernameText').style.color = "red";
-			//document.getElementById('pUsername').style.color = "red";
 			document.getElementById('submitButton').style.backgroundColor = "red";
 			document.getElementById('usernameText').onclick = onClickUser;
-	
-			//2nd version
 			setColorAndDisplay('usernameText', 'red', undefined);
 			setColorAndDisplay('pUsername', 'red', undefined);
 		};
 	
 		if (isEmpty(pass)) {
 			pass2.value = "Acest camp trebuie completat!";
-			//document.getElementById('passwordText1').style.display = 'none';
-			//document.getElementById('passwordText2').style.display = 'block';
-			//document.getElementById('passwordText2').style.color = "red";
 			document.getElementById('pPassword').style.color = "red";
 			document.getElementById('submitButton').style.backgroundColor = "red";
 			document.getElementById('passwordText2').onclick = onClickPass;
-	
-			//2nd version
 			setColorAndDisplay('passwordText1', undefined, 'none');
 			setColorAndDisplay('passwordText2', 'red', 'block');
 			setColorAndDisplay('pPassword', 'red', undefined);
@@ -66,20 +57,10 @@ function loginCheck () {
                 "cache-control": "no-cache"
             }
         });
-
-		/*
-		if (user.value == validUser && pass.value == validPass) {
-
-		} else {
-			document.getElementById('errorMessage').innerHTML = "User sau parola incorcta!";
-		}
-		*/
 	}
 }
 
 function onClickPass () {
-	//document.getElementById('passwordText2').style.display = 'none';
-	//document.getElementById('passwordText1').style.display = 'block';
 	visibility('passwordText1', 'block');
 	visibility('passwordText2', 'none');
 
@@ -101,26 +82,15 @@ function setColorAndDisplay (id, color, display) {
 }
 
 function isLogedIn () {
+	if (user.hasParking == undefined) {};
 	visibility('loginAlignment', 'none');
 	visibility('contentAlignment', 'block');
 
-	// TODO at a later point:  create generic functions
-	// show('loginAlignment');
-	// hide('contentAlignment');
 
-
-
-	
-/*
-	var user = {};
-	user.name = 'Ioana';
-	user.hasParking = false;
-*/	
-	var str = "<h2 class=\"white\">Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"isLogedOut();\"></input></h2>";
+	var str = "<h2>Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"isLogedOut();\"></input></h2>";
 	$('#welcomeMessage').html(str);
 	
-	// TODO 
-	// show hide/content based on user.hasParking s
+	
 	function toggleState() {
 		if (user.hasParking) {
 			$('#withoutParking').hide();
@@ -132,6 +102,31 @@ function isLogedIn () {
 		} else if (user.hasParking == false) {
 			$('#withoutParking').show();
 	        $('#withParking').hide();
+			$('#freeSpots').DataTable();
+
+            $.ajax({
+                type: "GET",
+                url: "../backend/vacancies",
+                success: function(spotsArray) {
+                	var datas = [];
+                	for (var i=0; i<= spotsArray.length; i++) {
+                		var item = spotsArray[i];
+                		var arr = [];
+                		arr.push(item.spot.number);
+                		arr.push(item.spot.floor);
+                		arr.push(item.date);
+                		datas.push(arr);
+                	}
+                	debugger;
+                },
+                error: function(data) {
+                    document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
+                },
+                headers: {
+                    "content-type": "application/json",
+                    "cache-control": "no-cache"
+                }
+            });
 
 		}
 	}
