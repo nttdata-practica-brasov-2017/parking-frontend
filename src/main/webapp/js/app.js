@@ -33,10 +33,12 @@ function loginCheck () {
 			setColorAndDisplay('passwordText1', undefined, 'none');
 			setColorAndDisplay('passwordText2', 'red', 'block');
 			setColorAndDisplay('pPassword', 'red', undefined);
-		};
+		};//
 	} else {
         var url = 'http://localhost:8080/backend/login';
-        var data = {username:inputUsername.value, password: pass.value};
+        user.username = inputUsername.value;
+        user.password = pass.value;
+        var data = {username:user.username, password: user.password};
 		$.ajax({
             type: "POST",
             url: url,
@@ -51,11 +53,15 @@ function loginCheck () {
 			},
 			error: function(data) {
                 document.getElementById('errorMessage').innerHTML = "User sau parola incorcta!";
+                document.getElementById('errorMessage').s
 			},
 			headers: {
                 "content-type": "application/json",
-                "cache-control": "no-cache"
-            }
+                "cache-control": "no-cache"   
+            },
+            beforeSend: function (xhr) {
+    			xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
+			}
         });
 	}
 }
@@ -102,22 +108,64 @@ function isLogedIn () {
 		} else if (user.hasParking == false) {
 			$('#withoutParking').show();
 	        $('#withParking').hide();
-			$('#freeSpots').DataTable();
-
+			
             $.ajax({
                 type: "GET",
                 url: "../backend/vacancies",
-                success: function(spotsArray) {
+                success: function(response) {
+                	spotsArray = response;
+//
                 	var datas = [];
-                	for (var i=0; i<= spotsArray.length; i++) {
+                	for (var i=0; i< spotsArray.length; i++) {
                 		var item = spotsArray[i];
                 		var arr = [];
                 		arr.push(item.spot.number);
                 		arr.push(item.spot.floor);
                 		arr.push(item.date);
+                		arr.push("");
                 		datas.push(arr);
                 	}
-                	debugger;
+                	$('#freeSpots').DataTable(
+                		{
+                			data: datas,
+                			"columnDefs": [
+            					{
+            					    "render": function ( data, type, row ) {
+            					    	var spot = row[0];
+            					    	var floor = row[1];
+            					    	var date = row[2];
+            					        return '<input class="claimButton" data-spot="' + spot + '" data-floor="' + floor + '"data-date="' + date  + '" type="button" value="Claim"></input>';
+            					    },
+            					    "targets": 3
+            					}]
+                		})
+                	$('.claimButton').on("click", function(evt){
+                		var btn = $(evt.target);
+                		var spot = btn.data('spot');
+                		var floor = btn.data('floor');
+                		var date = btn.data('date');
+                		var postUser = user.username;
+                		//*******************
+
+						$.ajax({
+            			    type: "POST",
+            			    url: "../backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
+            			    success: function(spotsArray) {
+            			    	alert("Thank you!");
+            			    },
+            			    error: function(data) {
+            			        document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
+            			    },
+            			    headers: {
+            			        "content-type": "application/json",
+            			        "cache-control": "no-cache"
+            			    },
+            			    beforeSend: function (xhr) {
+    							xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
+							}
+            			});
+                		debugger; 
+                	});
                 },
                 error: function(data) {
                     document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
@@ -125,12 +173,16 @@ function isLogedIn () {
                 headers: {
                     "content-type": "application/json",
                     "cache-control": "no-cache"
-                }
+                },
+                beforeSend: function (xhr) {
+    				xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
+				}
             });
 
+			
 		}
 	}
-
+//
 	if (user.hasParking) {
         $('#withParking').load('html/with-parking.html', toggleState);
 	} else if (user.hasParking == false) {
