@@ -21,18 +21,17 @@ function loginCheck () {
 			user.value = "Acest camp trebuie completat!";
 			document.getElementById('submitButton').style.backgroundColor = "red";
 			document.getElementById('usernameText').onclick = onClickUser;
-			setColorAndDisplay('usernameText', 'red', undefined);
-			setColorAndDisplay('pUsername', 'red', undefined);
+			setColor('usernameText', 'red');
+			setColor('pUsername', 'red');
 		};
 	
 		if (isEmpty(pass)) {
 			pass2.value = "Acest camp trebuie completat!";
 			document.getElementById('pPassword').style.color = "red";
 			document.getElementById('submitButton').style.backgroundColor = "red";
-			document.getElementById('passwordText2').onclick = onClickPass;
-			setColorAndDisplay('passwordText1', undefined, 'none');
-			setColorAndDisplay('passwordText2', 'red', 'block');
-			setColorAndDisplay('pPassword', 'red', undefined);
+			document.getElementById('passwordText').onclick = onClickPass;
+			setColor('passwordText', 'red');
+			setColor('pPassword', 'red');
 		};//
 	} else {
         var url = 'http://localhost:8080/backend/login';
@@ -58,19 +57,14 @@ function loginCheck () {
 			headers: {
                 "content-type": "application/json",
                 "cache-control": "no-cache"   
-            },
-            beforeSend: function (xhr) {
-    			xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
-			}
+            }
         });
 	}
 }
 
 function onClickPass () {
-	visibility('passwordText1', 'block');
-	visibility('passwordText2', 'none');
 
-	document.getElementById('passwordText1').focus();
+	document.getElementById('passwordText').focus();
 	document.getElementById('pPassword').style.color = "black";
 	document.getElementById('submitButton').style.backgroundColor = "transparent";
 }
@@ -82,9 +76,8 @@ function onClickUser () {
 	document.getElementById('submitButton').style.backgroundColor = "transparent";
 }
 
-function setColorAndDisplay (id, color, display) {
+function setColor (id, color) {
 	document.getElementById(id).style.color = color;
-	document.getElementById(id).style.display = display;
 }
 
 function isLogedIn () {
@@ -92,99 +85,151 @@ function isLogedIn () {
 	visibility('loginAlignment', 'none');
 	visibility('contentAlignment', 'block');
 
-
-	var str = "<h2>Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"isLogedOut();\"></input></h2>";
+	var str = "<h2>Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input></h2>";
 	$('#welcomeMessage').html(str);
 	
 	
 	function toggleState() {
 		if (user.hasParking) {
+			
 			$('#withoutParking').hide();
 	        $('#withParking').show();
+	        visibility('releaseIsOk', 'none');
+	   
 
-	        $(document).ready(function() {
-    			$('#claimButton').DataTable();
-			} );
+	       	var postUser = user.username;
+	       	$.ajax({
+	              	type: "GET",
+	               	url: "http://localhost:8080/backend/" + postUser + "/vacancies/assigned",
+	               	crossDomain: true,
+	   				dataType: 'json',
+	               success: function(response) {
+	               		if (response.length !== 0) {
+	               			document.getElementById('alreadyReleased').innerHTML = "Ai dat deja release!";
+	               			visibility('releaseButton', 'none');
+	               			visibility('releaseIsOk', 'none');
+	               			visibility('showParkingSpot', 'none');
+	               		}
+	               },
+	               error: function(data) {
+	                   document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
+	               },
+	               headers: {
+	                   "content-type": "application/json",
+	                   "cache-control": "no-cache"
+	               },
+	               beforeSend: function (xhr) {
+	   							xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
+							}
+	           });
+	
 		} else if (user.hasParking == false) {
 			$('#withoutParking').show();
 	        $('#withParking').hide();
 			
-            $.ajax({
-                type: "GET",
-                url: "../backend/vacancies",
-                success: function(response) {
-                	spotsArray = response;
-//
-                	var datas = [];
-                	for (var i=0; i< spotsArray.length; i++) {
-                		var item = spotsArray[i];
-                		var arr = [];
-                		arr.push(item.spot.number);
-                		arr.push(item.spot.floor);
-                		arr.push(item.date);
-                		arr.push("");
-                		datas.push(arr);
-                	}
-                	$('#freeSpots').DataTable(
-                		{
-                			data: datas,
-                			"columnDefs": [
-            					{
-            					    "render": function ( data, type, row ) {
-            					    	var spot = row[0];
-            					    	var floor = row[1];
-            					    	var date = row[2];
-            					        return '<input class="claimButton" data-spot="' + spot + '" data-floor="' + floor + '"data-date="' + date  + '" type="button" value="Claim"></input>';
-            					    },
-            					    "targets": 3
-            					}]
-                		})
-                	$('.claimButton').on("click", function(evt){
-                		var btn = $(evt.target);
-                		var spot = btn.data('spot');
-                		var floor = btn.data('floor');
-                		var date = btn.data('date');
-                		var postUser = user.username;
-                		//*******************
+				$.ajax({
+                	type: "GET",
+                	url:"http://localhost:8080/backend/" + user.username + "/bookings",
+					crossDomain: true,
+                	success: function(response) {
+                	    if(response.length!=0) {
+                	        $('#withoutParking').hide();
+                	        var message = "<h2>Hello " + user.name + " you have parking spot for today" + "" +
+                	            "! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input</h2>"
+                	        $('#welcomeMessage').html(message);
+	
+                	    }
+                	},
+                	error: function(response) {
+                	    document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
+                	},
+                	headers: {
+                	    "content-type": "application/json",
+                	    "cache-control": "no-cache"
+                	},
+            	});
 
+	           $.ajax({
+	               type: "GET",
+	               url: "http://localhost:8080/backend/vacancies",
+	               crossDomain: true,
+	   			dataType: 'json',
+	               success: function(response) {
+	               	spotsArray = response;
+	
+	               	var datas = [];
+	               	for (var i=0; i< spotsArray.length; i++) {
+	               		var item = spotsArray[i];
+	               		var arr = [];
+	               		arr.push(item.spot.number);
+	               		arr.push(item.spot.floor);
+	               		arr.push(item.date);
+	               		arr.push("");
+	               		datas.push(arr);
+	               	}
+	               	$('#freeSpots').DataTable(
+	               		{
+	               			data: datas,
+	               			"columnDefs": [
+	           					{
+	           					    "render": function ( data, type, row ) {
+	           					    	var spot = row[0];
+	           					    	var floor = row[1];
+	           					        return '<input class="claimButton" data-spot="' + spot + '" data-floor="' + floor + '" type="button" value="Claim"></input>';
+	           					    },
+	           					    "targets": 2
+	           					}]
+	               		})
+	               	$('.claimButton').on("click", function(evt){
+	               		var btn = $(evt.target);
+	               		var spot = btn.data('spot');
+	               		var floor = btn.data('floor');
+	               		var date = btn.data('date');
+	               		var postUser = user.username;
+	               		//*******************
 						$.ajax({
-            			    type: "POST",
-            			    url: "../backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
-            			    success: function(spotsArray) {
-            			    	alert("Thank you!");
-            			    },
-            			    error: function(data) {
-            			        document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
-            			    },
-            			    headers: {
-            			        "content-type": "application/json",
-            			        "cache-control": "no-cache"
-            			    },
-            			    beforeSend: function (xhr) {
-    							xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
+	           			    type: "POST",
+	           			    url: "http://localhost:8080/backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
+	           			    success: function(spotsArray) {
+	           			    	var message = "<h2>Hello " + user.name + "<br>" + " Your parking space today is spot " + btn.data('spot') + " floor " + btn.data('floor') + "" +
+                                        "! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input</h2>"
+                                $('#welcomeMessage').html(message);
+                                visibility('freeSpots', 'none');
+                                visibility('freeSpotsText', 'none');
+                                visibility('freeSpots_wrapper', 'none');
+	           			    },
+	           			    error: function(data) {
+	           			        document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
+	           			    },
+	           			    headers: {
+	           			        "content-type": "application/json",
+	           			        "cache-control": "no-cache"
+	           			    },
+	           			    beforeSend: function (xhr) {
+	   							xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
 							}
-            			});
-                		debugger; 
-                	});
-                },
-                error: function(data) {
-                    document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
-                },
-                headers: {
-                    "content-type": "application/json",
-                    "cache-control": "no-cache"
-                },
-                beforeSend: function (xhr) {
-    				xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
+	           			});
+	               		debugger; 
+	               	});
+	               },
+	               error: function(data) {
+	                   document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
+	               },
+	               headers: {
+	                   "content-type": "application/json",
+	                   "cache-control": "no-cache"
+	               },
+	               beforeSend: function (xhr) {
+	   				xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
 				}
-            });
-
+	           });
 			
 		}
 	}
 //
 	if (user.hasParking) {
         $('#withParking').load('html/with-parking.html', toggleState);
+      
 	} else if (user.hasParking == false) {
 		$('#withoutParking').load('html/without-parking.html', toggleState);
 	}
@@ -195,15 +240,47 @@ function isLogedIn () {
 
 }
 
-function isLogedOut () {
-	visibility('loginAlignment', 'block');
-	visibility('contentAlignment', 'none');
-
-	document.getElementById('usernameText').value = "";
-	document.getElementById('passwordText1').value = "";
-	
-}
-
 function visibility (id, atribute) {
 	document.getElementById(id).style.display = atribute;
+}
+
+function releaseSubmitButton() {
+	var postUser = user.username;
+	var isReleased = false;
+	$.ajax({
+        type: "POST",
+        crossDomain: true,
+        url: "http://localhost:8080/backend/" + postUser + "/vacancies/assigned",
+        success: function(spotsArray) {
+        	document.getElementById('releaseValidate').innerHTML = "Locul tau este eliberat!";
+        	visibility('releaseButton', 'none');
+        	isReleased = true;
+
+        },
+        error: function(data) {
+        	visibility('releaseValidate', 'none');
+        	if (!isEmpty(data.responseText)) {
+        		var err = JSON.parse(data.responseText);
+            	document.getElementById('postError').innerHTML = err.error;
+            	document.getElementById('postError').style.color = 'red';
+            }
+        },
+        headers: {
+            "cache-control": "no-cache",
+            "Authorization": "Basic " + btoa(user.username + ":" + user.password),
+        },
+        beforeSend: function (xhr) {
+        	xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
+		}
+    });
+
+    visibility('releaseValidate', 'block');
+    document.getElementById('releaseValidate').innerHTML = "Locul tau este eliberat!";
+    visibility('releaseButton', 'none');
+    visibility('releaseIsOk', 'none');
+
+}
+
+function errorMessage() {
+	document.getElementById('errorMessage').innerHTML = ""
 }
