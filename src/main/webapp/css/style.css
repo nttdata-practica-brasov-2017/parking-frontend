@@ -7,6 +7,7 @@
 body {
 	background: white;
 	font: 100%/1 "Helvetica Neue", Arial, sans-serif;
+  text-align: center;
 }
 
 
@@ -30,15 +31,6 @@ body {
   font-size: 1rem;
   transform: rotate(-90deg);
 }
-.login.loading > .login-header {
-  width: 20rem;
-}
-.login.loading > .login-header > .text {
-  display: none;
-}
-.login.loading > .login-header > .loader {
-  display: block;
-}
 
 .login-header {
   position: absolute;
@@ -59,40 +51,6 @@ body {
   color: #fff;
   transition: all 0.5s ease-in-out;
 }
-.login-header > .loader {
-  display: none;
-  position: absolute;
-  left: 5rem;
-  top: 5rem;
-  width: 10rem;
-  height: 10rem;
-  border: 2px solid #fff;
-  border-radius: 50%;
-  animation: loading 2s linear infinite;
-}
-.login-header > .loader:after {
-  content: "";
-  position: absolute;
-  left: 4.5rem;
-  top: -0.5rem;
-  width: 1rem;
-  height: 1rem;
-  background: #fff;
-  border-radius: 50%;
-  border-right: 2px solid orange;
-}
-.login-header > .loader:before {
-  content: "";
-  position: absolute;
-  left: 4rem;
-  top: -0.5rem;
-  width: 0;
-  height: 0;
-  border-right: 1rem solid #fff;
-  border-top: 0.5rem solid transparent;
-  border-bottom: 0.5rem solid transparent;
-}
-
 
 #contentAlignment {
 	max-width: 80%;
@@ -127,21 +85,131 @@ display: none;
 	margin-right: 30%;
 }
 
-#submitButton{
-    margin-left: 30%;
+/* Login Button */
+
+#loginButton{
+  margin-left: 30%;
 	margin-right: 30%;
 	margin-top: 5%;
 	margin-bottom: 5%;
 	background-color: rgb(255, 203, 96);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
 }
 
-#logoutButton{
+#loginButton:hover,
+#loginButton:focus {
+    border-color: #3072b3;
+    border-bottom-color: #2a65a0;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    color: #fff;
+    background-color: #3C8DDE;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#599bdc), to(#3072b3));
+    background-image: -webkit-linear-gradient(#599bdc, #3072b3);
+    background-image: -moz-linear-gradient(#599bdc, #3072b3);
+    background-image: -o-linear-gradient(#599bdc, #3072b3);
+    background-image: -ms-linear-gradient(#599bdc, #3072b3);
+    background-image: linear-gradient(#599bdc, #3072b3);
+}
+
+/*End Login Button */
+
+/* Logout Buttons */
+.logoutButtons{
 	position: absolute;
 	right: 10px;
 	top: 5px;
+  background-color: rgb(255, 203, 96);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
 }
 
+.logoutButtons:hover,
+.logoutButtons:focus {
+    border-color: #3072b3;
+    border-bottom-color: #2a65a0;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    color: #fff;
+    background-color: #3C8DDE;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#599bdc), to(#3072b3));
+    background-image: -webkit-linear-gradient(#599bdc, #3072b3);
+    background-image: -moz-linear-gradient(#599bdc, #3072b3);
+    background-image: -o-linear-gradient(#599bdc, #3072b3);
+    background-image: -ms-linear-gradient(#599bdc, #3072b3);
+    background-image: linear-gradient(#599bdc, #3072b3);
+}
+
+/* End Logout Buttons */
+
+/*Release Button */
+.rbtn {
+  display: block;
+  width: 180px;
+  height: 50px;
+  font-family: 'Droid Sans Mono', sans-serif;
+  font-size: 16px;
+  color: #000;
+  background-color: rgb(255, 203, 96);
+  border-radius: 5px;
+  box-shadow: 0px 3px 0px #3D8C72;
+  text-align: center;
+  line-height: 50px;
+  text-decoration: none;
+  margin: 50px auto 0;
+  font-weight: bold;
+  -webkit-animation: rbtnWiggle 5s infinite;
+  -moz-animation: rbtnWiggle 5s infinite;
+  -o-animation: rbtnWiggle 5s infinite;
+  animation: rbtnWiggle 5s infinite;
+}
+
+@-webkit-keyframes rbtnWiggle {
+    0% {-webkit-transform: rotate(0deg);}
+    2% {-webkit-transform: rotate(-1deg);}
+    3.5% {-webkit-transform: rotate(1deg);}
+    5% {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(0deg);}
+}
+@-o-keyframes rbtnWiggle {
+    0% {-webkit-transform: rotate(0deg);}
+    2% {-webkit-transform: rotate(-1deg);}
+    3.5% {-webkit-transform: rotate(1deg);}
+    5% {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(0deg);}
+}
+@keyframes rbtnWiggle {
+    0% {-webkit-transform: rotate(0deg);}
+    2% {-webkit-transform: rotate(-1deg);}
+    3.5% {-webkit-transform: rotate(1deg);}
+    5% {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(0deg);}
+}
+
+/*End Release Button */
 
 .white {
   color : white;
 }
+
+.container {
+  text-align: center;
+}
+
+.welcomeMessage {
+  text-align: center;
+}
+
+
+/* other*/

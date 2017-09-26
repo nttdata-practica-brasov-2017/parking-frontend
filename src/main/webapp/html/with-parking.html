@@ -1,7 +1,12 @@
 
 <link rel="stylesheet" href="css/style.css">
 <meta charset="utf-8"/>
-<div>
-	<h2 class="">Your parking space is</h2>
-	<input class="" type="button" id="releaseButton" value="Release"onclick="releaseSubmitButton()"></input>
+<div class="container">
+	<br><br>
+	<h2 id="showParkingSpot">You already have a parking spot</h2>
+	<div class="wrapper"><input class="rbtn" type="button" id="releaseButton" value="Release"onclick="releaseSubmitButton()"></input></div>
+	<h2 id="releaseValidate"></h2>
+	<h2 id="alreadyReleased"></h2>
+	<h2 id="releaseIsOk">Your spot is already released!</h2>
+	<p id="postError"></p>
 </div>

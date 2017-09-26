@@ -1,9 +1,5 @@
 user = {};
 
-function loginSubmitButton () {
-	loginCheck();
-}
-
 function isEmpty (str) {
 	if (str.value == "") {
 		return true;
@@ -18,17 +14,16 @@ function loginCheck () {
 
 	if (isEmpty(inputUsername) || isEmpty(pass)) {
 		if (isEmpty(inputUsername)) {
-			user.value = "Acest camp trebuie completat!";
-			document.getElementById('submitButton').style.backgroundColor = "red";
+			document.getElementById('loginButton').style.backgroundColor = "red";
 			document.getElementById('usernameText').onclick = onClickUser;
 			setColor('usernameText', 'red');
 			setColor('pUsername', 'red');
+			errorMessage(2);
 		};
 	
 		if (isEmpty(pass)) {
-			pass2.value = "Acest camp trebuie completat!";
 			document.getElementById('pPassword').style.color = "red";
-			document.getElementById('submitButton').style.backgroundColor = "red";
+			document.getElementById('loginButton').style.backgroundColor = "red";
 			document.getElementById('passwordText').onclick = onClickPass;
 			setColor('passwordText', 'red');
 			setColor('pPassword', 'red');
@@ -51,8 +46,7 @@ function loginCheck () {
 				}
 			},
 			error: function(data) {
-                document.getElementById('errorMessage').innerHTML = "User sau parola incorcta!";
-                document.getElementById('errorMessage').s
+                errorMessage(1);
 			},
 			headers: {
                 "content-type": "application/json",
@@ -66,14 +60,14 @@ function onClickPass () {
 
 	document.getElementById('passwordText').focus();
 	document.getElementById('pPassword').style.color = "black";
-	document.getElementById('submitButton').style.backgroundColor = "transparent";
+	document.getElementById('loginButton').style.backgroundColor = "rgb(255, 203, 96)";
 }
 
 function onClickUser () {
 	document.getElementById('usernameText').value = "";
 	document.getElementById('usernameText').style.color = "black";
 	document.getElementById('pUsername').style.color = "black";
-	document.getElementById('submitButton').style.backgroundColor = "transparent";
+	document.getElementById('loginButton').style.backgroundColor = "rgb(255, 203, 96)";
 }
 
 function setColor (id, color) {
@@ -85,7 +79,7 @@ function isLogedIn () {
 	visibility('loginAlignment', 'none');
 	visibility('contentAlignment', 'block');
 
-	var str = "<h2>Hello " + user.name + " ! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input></h2>";
+	var str = "<h2>Hello " + user.name + " ! <input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input></h2>";
 	$('#welcomeMessage').html(str);
 	
 	
@@ -105,7 +99,7 @@ function isLogedIn () {
 	   				dataType: 'json',
 	               success: function(response) {
 	               		if (response.length !== 0) {
-	               			document.getElementById('alreadyReleased').innerHTML = "Ai dat deja release!";
+	               			document.getElementById('alreadyReleased').innerHTML = "You already released your spot!";
 	               			visibility('releaseButton', 'none');
 	               			visibility('releaseIsOk', 'none');
 	               			visibility('showParkingSpot', 'none');
@@ -134,14 +128,14 @@ function isLogedIn () {
                 	success: function(response) {
                 	    if(response.length!=0) {
                 	        $('#withoutParking').hide();
-                	        var message = "<h2>Hello " + user.name + " you have parking spot for today" + "" +
-                	            "! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input</h2>"
+                	        var message = "<h2>Hello " + user.name + "<br><br> You have parking spot for today" + "" +
+                	            "! <input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input</h2>"
                 	        $('#welcomeMessage').html(message);
 	
                 	    }
                 	},
                 	error: function(response) {
-                	    document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
+                	    errorMessage(3);
                 	},
                 	headers: {
                 	    "content-type": "application/json",
@@ -191,15 +185,15 @@ function isLogedIn () {
 	           			    type: "POST",
 	           			    url: "http://localhost:8080/backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
 	           			    success: function(spotsArray) {
-	           			    	var message = "<h2>Hello " + user.name + "<br>" + " Your parking space today is spot " + btn.data('spot') + " floor " + btn.data('floor') + "" +
-                                        "! <input type=\"button\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input</h2>"
+	           			    	var message = "<h2>Hello " + user.name + "<br><br> Your parking space today is spot " + btn.data('spot') + " floor " + btn.data('floor') + "" +
+                                        "! <input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input</h2>"
                                 $('#welcomeMessage').html(message);
                                 visibility('freeSpots', 'none');
                                 visibility('freeSpotsText', 'none');
                                 visibility('freeSpots_wrapper', 'none');
 	           			    },
 	           			    error: function(data) {
-	           			        document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
+	           			        errorMessage(3);
 	           			    },
 	           			    headers: {
 	           			        "content-type": "application/json",
@@ -209,11 +203,10 @@ function isLogedIn () {
 	   							xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
 							}
 	           			});
-	               		debugger; 
 	               	});
 	               },
 	               error: function(data) {
-	                   document.getElementById('errorMessage').innerHTML = "A aparut o eroare!";
+	                   errorMessage(3);
 	               },
 	               headers: {
 	                   "content-type": "application/json",
@@ -233,9 +226,6 @@ function isLogedIn () {
 	} else if (user.hasParking == false) {
 		$('#withoutParking').load('html/without-parking.html', toggleState);
 	}
-
-
-
 	return false;
 
 }
@@ -252,7 +242,7 @@ function releaseSubmitButton() {
         crossDomain: true,
         url: "http://localhost:8080/backend/" + postUser + "/vacancies/assigned",
         success: function(spotsArray) {
-        	document.getElementById('releaseValidate').innerHTML = "Locul tau este eliberat!";
+        	document.getElementById('releaseValidate').innerHTML = "Your spot released successfully!";
         	visibility('releaseButton', 'none');
         	isReleased = true;
 
@@ -281,6 +271,24 @@ function releaseSubmitButton() {
 
 }
 
-function errorMessage() {
-	document.getElementById('errorMessage').innerHTML = ""
+function errorMessage(arg) {
+	switch(arg) {
+		case 1:
+			document.getElementById('errorMessage').innerHTML = "Invalid username or password!"
+			document.getElementById('errorMessage').style.color = 'red';
+			document.getElementById('loginButton').style.backgroundColor = "red";
+			setColor('usernameText', 'red');
+			setColor('pUsername', 'red');
+			setColor('passwordText', 'red');
+			setColor('pPassword', 'red');
+			break;
+		case 2:
+			document.getElementById('errorMessage').innerHTML = "You must enter an username and a password!"
+			document.getElementById('errorMessage').style.color = 'red';
+			break;
+		case 3:
+			document.getElementById('errorMessage').innerHTML = "ServerError"
+			document.getElementById('errorMessage').style.color = 'red';
+			break;
+	}
 }

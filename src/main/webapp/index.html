@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Login Ntt ss</title>
+		<title>Login Ntt</title>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 		<script src="js/app.js"></script>
@@ -22,14 +22,10 @@
 					<label for="usernameText" class="marg" id="pUsername">Username</label>
 					<input class="login-input" type="text" id="usernameText" name="fname" autofocus /> <br>
 					<label for="passwordText" class="marg" id="pPassword">Password</label>
-					<input class="login-input" type="password" id="passwordText1" name="fpass" /> <br>
-					<input class="login-input" type="text" id="passwordText2" name="fpass2" /> <br>
-					
-					<script type="text/javascript">
-					document.getElementById('passwordText2').style.display='none';
-					</script>
+					<input class="login-input" type="password" id="passwordText" name="fpass" /> <br>
+
 					<p id="errorMessage"></p>
-					<input type="button" id="submitButton" value="Submit"onclick="loginSubmitButton()"></input>
+					<input type="button" id="loginButton" value="Login"onclick="loginCheck()"></input>
 				</form>
 			</div>
 	
@@ -41,15 +37,11 @@
 		</div>
 
 		<script type="text/javascript">
-			
-			if (isLogedIn()) {
-				isLogedIn();
-			} else {
-				isLogedOut();
-			}
-    //
-			//
-		</script>
-		
+			$(document).ready(function(){
+                $('.login').on('mouseover', function(){
+                    $(this).addClass('focused');
+                });
+            });
+		</script>		
 	</body>
 </html>
