@@ -5,7 +5,7 @@
 }
 
 body {
-	background: white;
+  background-color: #D5DBDB;
 	font: 100%/1 "Helvetica Neue", Arial, sans-serif;
   text-align: center;
 }
@@ -19,7 +19,7 @@ body {
   width: 20rem;
   height: 20rem;
   padding: 20px;
-  background: #fff;
+  background: #0080B1;
   border-radius: 5px;
   overflow: hidden;
 }
@@ -38,7 +38,9 @@ body {
   top: 0;
   width: 20rem;
   height: 20rem;
-  background: orange;
+  background-image: url('../images/nttBackground.png');
+  -webkit-background-size: 20rem 20rem;
+  background-size: 20rem 20rem;
   transition: width 0.5s ease-in-out;
 }
 .login-header > .text {
@@ -48,7 +50,7 @@ body {
   font-size: 5rem;
   text-align: center;
   line-height: 20rem;
-  color: #fff;
+  color: #E6EEFF;
   transition: all 0.5s ease-in-out;
 }
 
@@ -65,7 +67,7 @@ display: none;
   font-size: 25px;
   padding: 0.5rem 1rem;
   box-shadow: none;
-  border-color: #ccc;
+  border-color: #E6EEFF;
   border-width: 0 0 2px 0;
 }
 .login-input + .login-input {
@@ -73,7 +75,7 @@ display: none;
 }
 .login-input:focus {
   outline: none;
-  border-bottom-color: orange;
+  border-bottom-color: #E6EEFF;
 }
 
 .login{
@@ -92,7 +94,7 @@ display: none;
 	margin-right: 30%;
 	margin-top: 5%;
 	margin-bottom: 5%;
-	background-color: rgb(255, 203, 96);
+	background-color: #5DADE2;
   border: none;
   color: white;
   padding: 8px 16px;
@@ -102,7 +104,7 @@ display: none;
   margin: 4px 2px;
 }
 
-#loginButton:hover,
+/*#loginButton:hover,
 #loginButton:focus {
     border-color: #3072b3;
     border-bottom-color: #2a65a0;
@@ -116,7 +118,7 @@ display: none;
     background-image: -o-linear-gradient(#599bdc, #3072b3);
     background-image: -ms-linear-gradient(#599bdc, #3072b3);
     background-image: linear-gradient(#599bdc, #3072b3);
-}
+}*/
 
 /*End Login Button */
 
@@ -125,7 +127,7 @@ display: none;
 	position: absolute;
 	right: 10px;
 	top: 5px;
-  background-color: rgb(255, 203, 96);
+  background-color: #3072b3;
   border: none;
   color: white;
   padding: 8px 16px;
@@ -137,18 +139,13 @@ display: none;
 
 .logoutButtons:hover,
 .logoutButtons:focus {
-    border-color: #3072b3;
-    border-bottom-color: #2a65a0;
+    border-color: #CA61F8;
+    border-bottom-color: #B625F5;
     text-decoration: none;
     text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
     color: #fff;
-    background-color: #3C8DDE;
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#599bdc), to(#3072b3));
-    background-image: -webkit-linear-gradient(#599bdc, #3072b3);
-    background-image: -moz-linear-gradient(#599bdc, #3072b3);
-    background-image: -o-linear-gradient(#599bdc, #3072b3);
-    background-image: -ms-linear-gradient(#599bdc, #3072b3);
-    background-image: linear-gradient(#599bdc, #3072b3);
+    background-color: #CD7BF1;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#CA61F8), to(#B625F5));
 }
 
 /* End Logout Buttons */
