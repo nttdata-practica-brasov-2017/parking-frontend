@@ -10,7 +10,7 @@ function isEmpty (str) {
 function loginCheck () {
 	var inputUsername = document.forms["loginForm"]["fname"];
 	var pass = document.forms["loginForm"]["fpass"];
-	
+
 	if (isEmpty(inputUsername) || isEmpty(pass)) {
 		if (isEmpty(inputUsername)) {
 			document.getElementById('loginButton').style.backgroundColor = "red";
@@ -32,7 +32,6 @@ function loginCheck () {
         user.username = inputUsername.value;
         user.password = pass.value;
         var data = {username:user.username, password: user.password};
-		
 		$.ajax({
             type: "POST",
             url: url,
@@ -56,6 +55,12 @@ function loginCheck () {
 	}
 }
 
+function onClickPass () {
+
+	document.getElementById('passwordText').focus();
+	document.getElementById('pPassword').style.color = "black";
+	document.getElementById('loginButton').style.backgroundColor = "rgb(255, 203, 96)";
+}
 
 function onClickUser () {
 	document.getElementById('usernameText').value = "";
@@ -64,18 +69,9 @@ function onClickUser () {
 	document.getElementById('loginButton').style.backgroundColor = "rgb(255, 203, 96)";
 }
 
-
-function onClickPass () {
-	document.getElementById('passwordText').focus();
-	document.getElementById('pPassword').style.color = "black";
-	document.getElementById('loginButton').style.backgroundColor = "rgb(255, 203, 96)";
-}
-
-
 function setColor (id, color) {
 	document.getElementById(id).style.color = color;
 }
-
 
 function isLogedIn () {
 	visibility('loginAlignment', 'none');
@@ -85,12 +81,12 @@ function isLogedIn () {
 	$('#welcomeMessage').html(str);
 	
 	if (user.hasParking) {
-        $('#withParking').load('html/with-parking.html', toggleState);     
+        $('#withParking').load('html/with-parking.html', toggleState);
 	} else {
 		$('#withoutParking').load('html/without-parking.html', toggleState);
 	}
 }
-	
+
 
 function showFreeSpots() {
 		$.ajax({
@@ -131,14 +127,14 @@ function showFreeSpots() {
 	            	var date = btn.data('date');
 	            	var postUser = user.username;
 	            	//*******************
-				
+
 					$.ajax({
 	         		    type: "POST",
 	         		    url: "http://localhost:8080/backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
 	         		    success: function(spotsArray) {
-	         		    	var message = "<h2>Hello " + user.name + "<br><br> Your parking space today is spot " + btn.data('spot') + 
+	         		    	var message = "<h2>Hello " + user.name + "<br><br> Your parking space today is spot " + btn.data('spot') +
 	         		    		" floor " + btn.data('floor') + "!<input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input> " + "<br><br><img src=\"./images/emoji.png\"/>" + "</h2>";
-                	        
+
                 	        $('#welcomeMessage').html(message);
                 	        visibility('freeSpots', 'none');
                 	        visibility('freeSpotsText', 'none');
@@ -181,11 +177,11 @@ function showFreeSpots() {
 
 function toggleState() {
 		if (user.hasParking) {
-			
+
 			$('#withoutParking').hide();
 	        $('#withParking').show();
 	        //visibility('releaseIsOk', 'none');
-	   
+
 
 	       	var postUser = user.username;
 	       	$.ajax({
@@ -215,11 +211,11 @@ function toggleState() {
 	   							xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
 							}
 	           });
-	
+
 		} else if (user.hasParking == false) {
 			//$('#withParking').hide();
 			//$('#withoutParking').show();
-	        
+
 
 				$.ajax({
                 	type: "GET",
@@ -234,7 +230,7 @@ function toggleState() {
                 	        var message = "<h2>Hello " + user.name + "<br><br><br><br> You have parking spot for today!" +
                 	            "<br><br><img src=\"./images/reservedParking.png\"/> <input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input></h2>"
                 	        $('#welcomeMessage').html(message);
-	
+
                 	    } else {
                 	    	showFreeSpots();
                 	    }
@@ -250,7 +246,7 @@ function toggleState() {
 	   						xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
 					}
             	});
-	           			
+
 		}
 }
 
@@ -318,5 +314,3 @@ function errorMessage(arg) {
 			break;
 	}
 }
-
-
