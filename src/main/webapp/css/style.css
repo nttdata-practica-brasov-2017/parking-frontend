@@ -8,6 +8,8 @@ body {
   background-color: #D5DBDB;
 	font: 100%/1 "Helvetica Neue", Arial, sans-serif;
   text-align: center;
+  margin: auto 0;
+  width: auto;
 }
 
 
@@ -55,7 +57,10 @@ body {
 }
 
 #contentAlignment {
-	max-width: 80%;
+	/*max-width: 80%;*/
+  width: auto;
+  margin: auto 0;
+
 }
 
 .noDisplay{
@@ -94,7 +99,7 @@ display: none;
 	margin-right: 30%;
 	margin-top: 5%;
 	margin-bottom: 5%;
-	background-color: #5DADE2;
+	background-color: #859dcd;
   border: none;
   color: white;
   padding: 8px 16px;
@@ -102,9 +107,10 @@ display: none;
   text-decoration: none;
   font-size: 16px;
   margin: 4px 2px;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#859dcd), to(#758EC0));
 }
 
-/*#loginButton:hover,
+#loginButton:hover,
 #loginButton:focus {
     border-color: #3072b3;
     border-bottom-color: #2a65a0;
@@ -112,20 +118,20 @@ display: none;
     text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
     color: #fff;
     background-color: #3C8DDE;
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#599bdc), to(#3072b3));
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#859dcd), to(#758EC0));
     background-image: -webkit-linear-gradient(#599bdc, #3072b3);
     background-image: -moz-linear-gradient(#599bdc, #3072b3);
     background-image: -o-linear-gradient(#599bdc, #3072b3);
     background-image: -ms-linear-gradient(#599bdc, #3072b3);
     background-image: linear-gradient(#599bdc, #3072b3);
-}*/
+}
 
 /*End Login Button */
 
 /* Logout Buttons */
 .logoutButtons{
 	position: absolute;
-	right: 10px;
+	right: 0;
 	top: 5px;
   background-color: #3072b3;
   border: none;
@@ -135,17 +141,18 @@ display: none;
   text-decoration: none;
   font-size: 16px;
   margin: 4px 2px;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#599bdc), to(#3072b3));
 }
 
 .logoutButtons:hover,
 .logoutButtons:focus {
-    border-color: #CA61F8;
-    border-bottom-color: #B625F5;
+    border-color: #859dcd;
+    border-bottom-color: #758EC0;
     text-decoration: none;
     text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
     color: #fff;
     background-color: #CD7BF1;
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#CA61F8), to(#B625F5));
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#859dcd), to(#758EC0));
 }
 
 /* End Logout Buttons */
@@ -157,10 +164,10 @@ display: none;
   height: 50px;
   font-family: 'Droid Sans Mono', sans-serif;
   font-size: 16px;
-  color: #000;
-  background-color: rgb(255, 203, 96);
+  color: #FFF;
+  background-color: #257810;
   border-radius: 5px;
-  box-shadow: 0px 3px 0px #3D8C72;
+  box-shadow: 0px 3px 0px #2D9015;
   text-align: center;
   line-height: 50px;
   text-decoration: none;
@@ -208,5 +215,24 @@ display: none;
   text-align: center;
 }
 
+.container {
+  width: auto;
+  margin: auto 0;
+}
 
-/* other*/
+.content {
+  width: auto;
+  margin: auto 0;
+}
+
+.marg {
+  font: italic bold 20px/41px Georgia, serif;
+}
+
+#withoutParking {
+  display: none;
+}
+
+#releaseButton, #showParkingSpot {
+  display: none;
+}

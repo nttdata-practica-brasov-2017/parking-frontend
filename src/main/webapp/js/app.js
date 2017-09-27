@@ -10,8 +10,7 @@ function isEmpty (str) {
 function loginCheck () {
 	var inputUsername = document.forms["loginForm"]["fname"];
 	var pass = document.forms["loginForm"]["fpass"];
-	var pass2 = document.forms["loginForm"]["fpass2"];
-
+	
 	if (isEmpty(inputUsername) || isEmpty(pass)) {
 		if (isEmpty(inputUsername)) {
 			document.getElementById('loginButton').style.backgroundColor = "red";
@@ -33,6 +32,7 @@ function loginCheck () {
         user.username = inputUsername.value;
         user.password = pass.value;
         var data = {username:user.username, password: user.password};
+		
 		$.ajax({
             type: "POST",
             url: url,
@@ -56,12 +56,6 @@ function loginCheck () {
 	}
 }
 
-function onClickPass () {
-
-	document.getElementById('passwordText').focus();
-	document.getElementById('pPassword').style.color = "black";
-	document.getElementById('loginButton').style.backgroundColor = "rgb(255, 203, 96)";
-}
 
 function onClickUser () {
 	document.getElementById('usernameText').value = "";
@@ -70,25 +64,127 @@ function onClickUser () {
 	document.getElementById('loginButton').style.backgroundColor = "rgb(255, 203, 96)";
 }
 
+
+function onClickPass () {
+	document.getElementById('passwordText').focus();
+	document.getElementById('pPassword').style.color = "black";
+	document.getElementById('loginButton').style.backgroundColor = "rgb(255, 203, 96)";
+}
+
+
 function setColor (id, color) {
 	document.getElementById(id).style.color = color;
 }
 
+
 function isLogedIn () {
-	if (user.hasParking == undefined) {};
 	visibility('loginAlignment', 'none');
 	visibility('contentAlignment', 'block');
 
 	var str = "<h2>Hello " + user.name + " ! <input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input></h2>";
 	$('#welcomeMessage').html(str);
 	
+	if (user.hasParking) {
+        $('#withParking').load('html/with-parking.html', toggleState);     
+	} else {
+		$('#withoutParking').load('html/without-parking.html', toggleState);
+	}
+}
 	
-	function toggleState() {
+
+function showFreeSpots() {
+		$.ajax({
+	            type: "GET",
+	            url: "http://localhost:8080/backend/vacancies",
+	            crossDomain: true,
+	   			dataType: 'json',
+	            success: function(response) {
+	            spotsArray = response;
+	
+	            var datas = [];
+	            for (var i=0; i< spotsArray.length; i++) {
+	            	var item = spotsArray[i];
+	            	var arr = [];
+	            	arr.push(item.spot.number);
+	            	arr.push(item.spot.floor);
+	            	arr.push(item.date);
+	            	arr.push("");
+	            	datas.push(arr);
+	            }
+	            $('#freeSpots').DataTable(
+	            	{
+	               		data: datas,
+	               		"columnDefs": [
+	           				{
+	           				    "render": function ( data, type, row ) {
+	           				    	var spot = row[0];
+	           				    	var floor = row[1];
+	           				        return '<input class="claimButton" data-spot="' + spot + '" data-floor="' + floor + '" type="button" value="Claim"></input>';
+	           				    },
+	           				    "targets": 2
+	           				}]
+	            	})
+	            $('.claimButton').on("click", function(evt){
+	            	var btn = $(evt.target);
+	            	var spot = btn.data('spot');
+	            	var floor = btn.data('floor');
+	            	var date = btn.data('date');
+	            	var postUser = user.username;
+	            	//*******************
+				
+					$.ajax({
+	         		    type: "POST",
+	         		    url: "http://localhost:8080/backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
+	         		    success: function(spotsArray) {
+	         		    	var message = "<h2>Hello " + user.name + "<br><br> Your parking space today is spot " + btn.data('spot') + 
+	         		    		" floor " + btn.data('floor') + "!<input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input> " + "<br><br><img src=\"./images/emoji.png\"/>" + "</h2>";
+                	        
+                	        $('#welcomeMessage').html(message);
+                	        visibility('freeSpots', 'none');
+                	        visibility('freeSpotsText', 'none');
+                	        visibility('freeSpots_wrapper', 'none');
+	         		    },
+	         		    error: function(data) {
+	         		        visibility('freeSpots', 'none');
+                	        visibility('freeSpotsText', 'none');
+                	        visibility('freeSpots_wrapper', 'none');
+                	        console.log(arguments);
+	         		        if (!isEmpty(data.responseText)) {
+        						var err = JSON.parse(data.responseText);
+            					document.getElementById('postError').innerHTML = err.error;
+            					document.getElementById('postError').style.color = 'red';
+	         		    	}
+	         		    },
+	         		    headers: {
+	         		        "content-type": "application/json",
+	         		        "cache-control": "no-cache"
+	         		    },
+	         		    beforeSend: function (xhr) {
+	   						xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
+						}
+	         			});
+	            });
+	               },
+	               error: function(data) {
+	                   errorMessage(3);
+	               },
+	               headers: {
+	                   "content-type": "application/json",
+	                   "cache-control": "no-cache"
+	               },
+	               beforeSend: function (xhr) {
+	   				xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
+				}
+	           });
+}
+
+
+function toggleState() {
 		if (user.hasParking) {
 			
 			$('#withoutParking').hide();
 	        $('#withParking').show();
-	        visibility('releaseIsOk', 'none');
+	        //visibility('releaseIsOk', 'none');
 	   
 
 	       	var postUser = user.username;
@@ -99,10 +195,13 @@ function isLogedIn () {
 	   				dataType: 'json',
 	               success: function(response) {
 	               		if (response.length !== 0) {
-	               			document.getElementById('alreadyReleased').innerHTML = "You already released your spot!";
-	               			visibility('releaseButton', 'none');
-	               			visibility('releaseIsOk', 'none');
-	               			visibility('showParkingSpot', 'none');
+	               			//visibility('releaseButton', 'none');
+	               			document.getElementById('alreadyReleased').innerHTML = "You already released your spot!" + "<br><br><img src=\"./images/freeParking.png\"/>";
+	               			//visibility('releaseIsOk', 'none');
+	               			//visibility('showParkingSpot', 'none');
+	               		} else {
+	               			visibility('releaseButton', 'block');
+	               			visibility('showParkingSpot', 'block');
 	               		}
 	               },
 	               error: function(data) {
@@ -118,20 +217,26 @@ function isLogedIn () {
 	           });
 	
 		} else if (user.hasParking == false) {
-			$('#withoutParking').show();
-	        $('#withParking').hide();
-			
+			//$('#withParking').hide();
+			//$('#withoutParking').show();
+	        
+
 				$.ajax({
                 	type: "GET",
                 	url:"http://localhost:8080/backend/" + user.username + "/bookings",
 					crossDomain: true,
                 	success: function(response) {
+                		$('#withParking').hide();
+						$('#withoutParking').show();
+
                 	    if(response.length!=0) {
                 	        $('#withoutParking').hide();
-                	        var message = "<h2>Hello " + user.name + "<br><br> You have parking spot for today" + "" +
-                	            "! <input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input</h2>"
+                	        var message = "<h2>Hello " + user.name + "<br><br><br><br> You have parking spot for today!" +
+                	            "<br><br><img src=\"./images/reservedParking.png\"/> <input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input></h2>"
                 	        $('#welcomeMessage').html(message);
 	
+                	    } else {
+                	    	showFreeSpots();
                 	    }
                 	},
                 	error: function(response) {
@@ -141,94 +246,14 @@ function isLogedIn () {
                 	    "content-type": "application/json",
                 	    "cache-control": "no-cache"
                 	},
+                	beforeSend: function (xhr) {
+	   						xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
+					}
             	});
-
-	           $.ajax({
-	               type: "GET",
-	               url: "http://localhost:8080/backend/vacancies",
-	               crossDomain: true,
-	   			dataType: 'json',
-	               success: function(response) {
-	               	spotsArray = response;
-	
-	               	var datas = [];
-	               	for (var i=0; i< spotsArray.length; i++) {
-	               		var item = spotsArray[i];
-	               		var arr = [];
-	               		arr.push(item.spot.number);
-	               		arr.push(item.spot.floor);
-	               		arr.push(item.date);
-	               		arr.push("");
-	               		datas.push(arr);
-	               	}
-	               	$('#freeSpots').DataTable(
-	               		{
-	               			data: datas,
-	               			"columnDefs": [
-	           					{
-	           					    "render": function ( data, type, row ) {
-	           					    	var spot = row[0];
-	           					    	var floor = row[1];
-	           					        return '<input class="claimButton" data-spot="' + spot + '" data-floor="' + floor + '" type="button" value="Claim"></input>';
-	           					    },
-	           					    "targets": 2
-	           					}]
-	               		})
-	               	$('.claimButton').on("click", function(evt){
-	               		var btn = $(evt.target);
-	               		var spot = btn.data('spot');
-	               		var floor = btn.data('floor');
-	               		var date = btn.data('date');
-	               		var postUser = user.username;
-	               		//*******************
-						$.ajax({
-	           			    type: "POST",
-	           			    url: "http://localhost:8080/backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
-	           			    success: function(spotsArray) {
-	           			    	var message = "<h2>Hello " + user.name + "<br><br> Your parking space today is spot " + btn.data('spot') + " floor " + btn.data('floor') + "" +
-                                        "! <input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input</h2>"
-                                $('#welcomeMessage').html(message);
-                                visibility('freeSpots', 'none');
-                                visibility('freeSpotsText', 'none');
-                                visibility('freeSpots_wrapper', 'none');
-	           			    },
-	           			    error: function(data) {
-	           			        errorMessage(3);
-	           			    },
-	           			    headers: {
-	           			        "content-type": "application/json",
-	           			        "cache-control": "no-cache"
-	           			    },
-	           			    beforeSend: function (xhr) {
-	   							xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
-							}
-	           			});
-	               	});
-	               },
-	               error: function(data) {
-	                   errorMessage(3);
-	               },
-	               headers: {
-	                   "content-type": "application/json",
-	                   "cache-control": "no-cache"
-	               },
-	               beforeSend: function (xhr) {
-	   				xhr.setRequestHeader ("Authorization", "Basic " + btoa(user.username + ":" + user.password));
-				}
-	           });
-			
+	           			
 		}
-	}
-//
-	if (user.hasParking) {
-        $('#withParking').load('html/with-parking.html', toggleState);
-      
-	} else if (user.hasParking == false) {
-		$('#withoutParking').load('html/without-parking.html', toggleState);
-	}
-	return false;
-
 }
+
 
 function visibility (id, atribute) {
 	document.getElementById(id).style.display = atribute;
@@ -241,9 +266,10 @@ function releaseSubmitButton() {
         type: "POST",
         crossDomain: true,
         url: "http://localhost:8080/backend/" + postUser + "/vacancies/assigned",
-        success: function(spotsArray) {
-        	document.getElementById('releaseValidate').innerHTML = "Your spot released successfully!";
+        success: function	(spotsArray) {
+        	document.getElementById('releaseValidate').innerHTML = "<br><br>Your spot was released successfully!<br><br><img src=\"./images/emoji.png\"/>";
         	visibility('releaseButton', 'none');
+	        visibility('showParkingSpot', 'none');
         	isReleased = true;
 
         },
@@ -265,9 +291,9 @@ function releaseSubmitButton() {
     });
 
     visibility('releaseValidate', 'block');
-    document.getElementById('releaseValidate').innerHTML = "Locul tau este eliberat!";
-    visibility('releaseButton', 'none');
-    visibility('releaseIsOk', 'none');
+    //document.getElementById('releaseValidate').innerHTML = "Locul tau este eliberat!";
+    //visibility('releaseButton', 'none');
+    //visibility('releaseIsOk', 'none');
 
 }
 
@@ -283,7 +309,7 @@ function errorMessage(arg) {
 			setColor('pPassword', 'red');
 			break;
 		case 2:
-			document.getElementById('errorMessage').innerHTML = "You must enter an username and a password!"
+			document.getElementById('errorMessage').innerHTML = "Enter an username and a password!"
 			document.getElementById('errorMessage').style.color = 'red';
 			break;
 		case 3:
@@ -292,3 +318,5 @@ function errorMessage(arg) {
 			break;
 	}
 }
+
+
