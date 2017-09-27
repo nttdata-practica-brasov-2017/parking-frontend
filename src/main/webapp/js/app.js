@@ -99,7 +99,7 @@ function isLogedIn () {
 	   				dataType: 'json',
 	               success: function(response) {
 	               		if (response.length !== 0) {
-	               			document.getElementById('alreadyReleased').innerHTML = "You already released your spot!";
+	               			document.getElementById('alreadyReleased').innerHTML = "Your spot was released today!";
 	               			visibility('releaseButton', 'none');
 	               			visibility('releaseIsOk', 'none');
 	               			visibility('showParkingSpot', 'none');
@@ -128,7 +128,7 @@ function isLogedIn () {
                 	success: function(response) {
                 	    if(response.length!=0) {
                 	        $('#withoutParking').hide();
-                	        var message = "<h2>Hello " + user.name + "<br><br> You have parking spot for today" + "" +
+                	        var message = "<h2>Hello " + user.name + "<br><br> You have already parking spot for today" + "" +
                 	            "! <input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input</h2>"
                 	        $('#welcomeMessage').html(message);
 	

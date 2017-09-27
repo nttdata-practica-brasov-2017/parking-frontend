@@ -55,7 +55,9 @@ body {
 }
 
 #contentAlignment {
-	max-width: 80%;
+    width: 1024px;
+    /*border: 1px solid red; */
+    margin: 0 auto;
 }
 
 .noDisplay{
@@ -208,5 +210,51 @@ display: none;
   text-align: center;
 }
 
+/* Table */
+#freeSpots{
+    cellspacing: 0;
+    width: 100%;
+}
 
-/* other*/
+.TextTable{
+    text-align: left;
+    padding: 8px;
+}
+
+#freeSpots :nth-child(even){
+    background-color: #f2f2f2;
+}
+
+/**#withoutParking {
+    width: 80%;
+}*/
+
+#withoutParkingContainer {
+    width:90%;
+    margin: 0 auto;
+}
+
+#freeSpots_wrapper {
+    background-color: ghostwhite;
+    padding: 20px;
+}
+#freeSpots {
+    margin-top: 20px;
+}
+
+.dataTables_length, .dataTables_filter {
+    margin-bottom: 20px;
+}
+
+.claimButton, .logoutButtons {
+    cursor: pointer;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    padding: 2px 4px !important;
+    /*
+    background-color: crimson !important;
+    color:white !important;
+    */
+    border: 1px solid darkblue !important;
+}
