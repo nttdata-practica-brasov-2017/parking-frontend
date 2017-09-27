@@ -132,7 +132,7 @@ function showFreeSpots() {
 	         		    type: "POST",
 	         		    url: "http://localhost:8080/backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
 	         		    success: function(spotsArray) {
-	         		    	var message = "<h2>Hello " + user.name + "<br><br> Your parking space today is spot " + btn.data('spot') +
+	         		    	var message = "<h2 class='back' id=\"release\">Hello " + user.name + "<br><br> Your parking space today is spot " + btn.data('spot') +
 	         		    		" floor " + btn.data('floor') + "!<input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input> " + "<br><br><img src=\"./images/emoji.png\"/>" + "</h2>";
 
                 	        $('#welcomeMessage').html(message);
@@ -180,6 +180,8 @@ function toggleState() {
 
 			$('#withoutParking').hide();
 	        $('#withParking').show();
+            visibility('releaseValidate', 'none');
+            visibility('alreadyReleased', 'none');
 	        //visibility('releaseIsOk', 'none');
 
 
@@ -195,6 +197,7 @@ function toggleState() {
 	               			document.getElementById('alreadyReleased').innerHTML = "You already released your spot!" + "<br><br><img src=\"./images/freeParking.png\"/>";
 	               			//visibility('releaseIsOk', 'none');
 	               			//visibility('showParkingSpot', 'none');
+                            visibility('alreadyReleased', 'block');
 	               		} else {
 	               			visibility('releaseButton', 'block');
 	               			visibility('showParkingSpot', 'block');
@@ -227,7 +230,7 @@ function toggleState() {
 
                 	    if(response.length!=0) {
                 	        $('#withoutParking').hide();
-                	        var message = "<h2>Hello " + user.name + "<br><br><br><br> You have parking spot for today!" +
+                	        var message = "<h2 class='back'>Hello " + user.name + "<br><br><br><br> You have parking spot for today!" +
                 	            "<br><br><img src=\"./images/reservedParking.png\"/> <input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input></h2>"
                 	        $('#welcomeMessage').html(message);
 

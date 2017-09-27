@@ -280,3 +280,8 @@ display: none;
 #releaseButton, #showParkingSpot {
   display: none;
 }
+
+.back{
+    background-color: ghostwhite;
+    padding: 20px;
+}
