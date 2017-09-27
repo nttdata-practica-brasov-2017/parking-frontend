@@ -115,7 +115,7 @@ function showFreeSpots() {
 	           				    "render": function ( data, type, row ) {
 	           				    	var spot = row[0];
 	           				    	var floor = row[1];
-	           				        return '<input class="claimButton" data-spot="' + spot + '" data-floor="' + floor + '" type="button" value="Claim"></input>';
+	           				        return '<input class="claimButton" id="cbtn" data-spot="' + spot + '" data-floor="' + floor + '" type="button" value="Claim"></input>';
 	           				    },
 	           				    "targets": 2
 	           				}]
