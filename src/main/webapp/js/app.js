@@ -28,7 +28,7 @@ function loginCheck() {
             setColor('pPassword', 'red');
         }; //
     } else {
-        var url = 'http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/backend/login';
+        var url = 'http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/login';
         user.username = inputUsername.value;
         user.password = pass.value;
         var data = {
@@ -38,6 +38,7 @@ function loginCheck() {
         $.ajax({
             type: "POST",
             url: url,
+            crossDomain: true,
             data: JSON.stringify(data),
             success: function(data) {
                 if (data.username) {
@@ -54,7 +55,8 @@ function loginCheck() {
             },
             headers: {
                 "content-type": "application/json",
-                "cache-control": "no-cache"
+                "cache-control": "no-cache",
+                "Access-Control-Allow-Credentials": "true"
             }
         });
     }
@@ -133,7 +135,7 @@ function showFreeSpots() {
 
                 $.ajax({
                     type: "POST",
-                    url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
+                    url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
                     success: function(spotsArray) {
                         var message = "<h2 class='back' id=\"release\">Hello " + user.name + "<br><br> Your parking space today is spot " + btn.data('spot') +
                             " floor " + btn.data('floor') + "!<input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input> " + "<br><br><img src=\"./images/emoji.png\"/>" + "</h2>";
@@ -156,7 +158,8 @@ function showFreeSpots() {
                     },
                     headers: {
                         "content-type": "application/json",
-                        "cache-control": "no-cache"
+                        "cache-control": "no-cache",
+                        "Access-Control-Allow-Credentials": "true"
                     },
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader("Authorization", "Basic " + btoa(user.username + ":" + user.password));
@@ -169,7 +172,8 @@ function showFreeSpots() {
         },
         headers: {
             "content-type": "application/json",
-            "cache-control": "no-cache"
+            "cache-control": "no-cache",
+            "Access-Control-Allow-Credentials": "true"
         },
         beforeSend: function(xhr) {
             xhr.setRequestHeader("Authorization", "Basic " + btoa(user.username + ":" + user.password));
@@ -190,12 +194,11 @@ function toggleState() {
         var postUser = user.username;
         $.ajax({
             type: "GET",
-            url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/backend/" + postUser + "/vacancies/assigned",
+            url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/" + postUser + "/vacancies/assigned",
             crossDomain: true,
             dataType: 'json',
             success: function(response) {
                 if (response.length !== 0) {
-                    //visibility('releaseButton', 'none');
                     document.getElementById('alreadyReleased').innerHTML = "You already released your spot!" + "<br><br><img src=\"./images/freeParking.png\"/>";
                     visibility('alreadyReleased', 'block');
                 } else {
@@ -208,7 +211,8 @@ function toggleState() {
             },
             headers: {
                 "content-type": "application/json",
-                "cache-control": "no-cache"
+                "cache-control": "no-cache",
+                "Access-Control-Allow-Credentials": "true"
             },
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("Authorization", "Basic " + btoa(user.username + ":" + user.password));
@@ -220,7 +224,7 @@ function toggleState() {
 
         $.ajax({
             type: "GET",
-            url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/backend/" + user.username + "/bookings",
+            url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/" + user.username + "/bookings",
             crossDomain: true,
             success: function(response) {
                 $('#withParking').hide();
@@ -241,7 +245,8 @@ function toggleState() {
             },
             headers: {
                 "content-type": "application/json",
-                "cache-control": "no-cache"
+                "cache-control": "no-cache",
+                "Access-Control-Allow-Credentials": "true"
             },
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("Authorization", "Basic " + btoa(user.username + ":" + user.password));
@@ -262,7 +267,7 @@ function releaseSubmitButton() {
     $.ajax({
         type: "POST",
         crossDomain: true,
-        url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/backend/" + postUser + "/vacancies/assigned",
+        url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/" + postUser + "/vacancies/assigned",
         success: function(spotsArray) {
             document.getElementById('releaseValidate').innerHTML = "<br><br>Your spot was released successfully!<br><br><img src=\"./images/emoji.png\"/>";
             visibility('releaseButton', 'none');
@@ -281,6 +286,7 @@ function releaseSubmitButton() {
         headers: {
             "cache-control": "no-cache",
             "Authorization": "Basic " + btoa(user.username + ":" + user.password),
+            "Access-Control-Allow-Credentials": "true",
         },
         beforeSend: function(xhr) {
             xhr.setRequestHeader("Authorization", "Basic " + btoa(user.username + ":" + user.password));
