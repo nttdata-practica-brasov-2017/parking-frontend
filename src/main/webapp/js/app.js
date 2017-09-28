@@ -56,6 +56,7 @@ function loginCheck() {
             headers: {
                 "content-type": "application/json",
                 "cache-control": "no-cache",
+                "Access-Control-Allow-Origin": '*',
                 "Access-Control-Allow-Credentials": "true"
             }
         });
@@ -159,6 +160,7 @@ function showFreeSpots() {
                     headers: {
                         "content-type": "application/json",
                         "cache-control": "no-cache",
+                		"Access-Control-Allow-Origin": '*',
                         "Access-Control-Allow-Credentials": "true"
                     },
                     beforeSend: function(xhr) {
@@ -173,6 +175,7 @@ function showFreeSpots() {
         headers: {
             "content-type": "application/json",
             "cache-control": "no-cache",
+            "Access-Control-Allow-Origin": '*',
             "Access-Control-Allow-Credentials": "true"
         },
         beforeSend: function(xhr) {
@@ -212,6 +215,7 @@ function toggleState() {
             headers: {
                 "content-type": "application/json",
                 "cache-control": "no-cache",
+                "Access-Control-Allow-Origin": '*',
                 "Access-Control-Allow-Credentials": "true"
             },
             beforeSend: function(xhr) {
@@ -246,6 +250,7 @@ function toggleState() {
             headers: {
                 "content-type": "application/json",
                 "cache-control": "no-cache",
+                "Access-Control-Allow-Origin": '*',
                 "Access-Control-Allow-Credentials": "true"
             },
             beforeSend: function(xhr) {
@@ -286,6 +291,7 @@ function releaseSubmitButton() {
         headers: {
             "cache-control": "no-cache",
             "Authorization": "Basic " + btoa(user.username + ":" + user.password),
+            "Access-Control-Allow-Origin": '*',
             "Access-Control-Allow-Credentials": "true",
         },
         beforeSend: function(xhr) {
