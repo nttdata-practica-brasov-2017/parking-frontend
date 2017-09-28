@@ -28,7 +28,7 @@ function loginCheck() {
             setColor('pPassword', 'red');
         }; //
     } else {
-        var url = 'http://localhost:8080/backend/login';
+        var url = 'http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/backend/login';
         user.username = inputUsername.value;
         user.password = pass.value;
         var data = {
@@ -96,7 +96,7 @@ function isLogedIn() {
 function showFreeSpots() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/backend/vacancies",
+        url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/vacancies",
         crossDomain: true,
         dataType: 'json',
         success: function(response) {
@@ -133,7 +133,7 @@ function showFreeSpots() {
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
+                    url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/backend/" + postUser + "/bookings/spots/" + spot + "?floor=" + floor,
                     success: function(spotsArray) {
                         var message = "<h2 class='back' id=\"release\">Hello " + user.name + "<br><br> Your parking space today is spot " + btn.data('spot') +
                             " floor " + btn.data('floor') + "!<input type=\"button\" class=\"logoutButtons\" id=\"logoutButton\" value=\"Logout\"onclick=\"window.location.reload()\"></input> " + "<br><br><img src=\"./images/emoji.png\"/>" + "</h2>";
@@ -190,7 +190,7 @@ function toggleState() {
         var postUser = user.username;
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/backend/" + postUser + "/vacancies/assigned",
+            url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/backend/" + postUser + "/vacancies/assigned",
             crossDomain: true,
             dataType: 'json',
             success: function(response) {
@@ -220,7 +220,7 @@ function toggleState() {
 
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/backend/" + user.username + "/bookings",
+            url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/backend/" + user.username + "/bookings",
             crossDomain: true,
             success: function(response) {
                 $('#withParking').hide();
@@ -262,7 +262,7 @@ function releaseSubmitButton() {
     $.ajax({
         type: "POST",
         crossDomain: true,
-        url: "http://localhost:8080/backend/" + postUser + "/vacancies/assigned",
+        url: "http://parking-parking-backend.193b.starter-ca-central-1.openshiftapps.com/parking-backend/backend/" + postUser + "/vacancies/assigned",
         success: function(spotsArray) {
             document.getElementById('releaseValidate').innerHTML = "<br><br>Your spot was released successfully!<br><br><img src=\"./images/emoji.png\"/>";
             visibility('releaseButton', 'none');
