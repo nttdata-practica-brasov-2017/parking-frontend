@@ -18,16 +18,16 @@
 		<div class="content">
 			<div class="login" id="loginAlignment">
 				<header class="login-header">
-					<span class="text">LOGIN</span><span class="loader"></span>
+					<span class="text" style="">LOGIN</span><span class="loader"></span>
 				</header>
 				<form name="loginForm">
 					<label for="usernameText" class="marg" id="pUsername">Username</label>
-					<input class="login-input" type="text" id="usernameText" name="fname" autofocus /> <br>
+					<input class="login-input" type="text" id="usernameText" name="fname" autofocus> <br>
 					<label for="passwordText" class="marg" id="pPassword">Password</label>
-					<input class="login-input" type="password" id="passwordText" name="fpass" /> <br>
+					<input class="login-input" type="password" id="passwordText" name="fpass"> <br>
 
 					<p id="errorMessage"></p>
-					<input type="button" id="loginButton" value="Login"onclick="loginCheck()"></input>
+					<input type="button" id="loginButton" value="Login" onclick="loginCheck()">
 				</form>
 			</div>
 	
@@ -36,6 +36,7 @@
 				<div id="withParking"></div>
 				<div id="withoutParking"></div>
 			</div>
+			
 		<script type="text/javascript">
 			$(document).ready(function(){
                 $('.login').on('mouseover', function(){

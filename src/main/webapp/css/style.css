@@ -6,12 +6,40 @@
 
 body {
   background-color: #D5DBDB;
-	/*font: 100%/1 "Helvetica Neue", Arial, sans-serif;*/
   text-align: center;
   font-family: 'Doppio One';
   font-size: 22px;
 }
 
+input[type=text],
+input[type=email],
+input[type=phone],
+input[type=password],
+textarea {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.25;
+  color: #495057;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=phone]:focus,
+input[type=password]:focus,
+textarea:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+}
 
 .login {
   position: absolute;
@@ -172,30 +200,30 @@ display: none;
   text-decoration: none;
   margin: 50px auto 0;
   font-weight: bold;
-  -webkit-animation: rbtnWiggle 5s infinite;
-  -moz-animation: rbtnWiggle 5s infinite;
-  -o-animation: rbtnWiggle 5s infinite;
-  animation: rbtnWiggle 5s infinite;
+  -webkit-animation: rbtnWiggle 3s infinite;
+  -moz-animation: rbtnWiggle 3s infinite;
+  -o-animation: rbtnWiggle 3s infinite;
+  animation: rbtnWiggle 3s infinite;
 }
 
 @-webkit-keyframes rbtnWiggle {
     0% {-webkit-transform: rotate(0deg);}
-    2% {-webkit-transform: rotate(-1deg);}
-    3.5% {-webkit-transform: rotate(1deg);}
+    2% {-webkit-transform: rotate(-3deg);}
+    3.5% {-webkit-transform: rotate(3deg);}
     5% {-webkit-transform: rotate(0deg);}
     100% {-webkit-transform: rotate(0deg);}
 }
 @-o-keyframes rbtnWiggle {
     0% {-webkit-transform: rotate(0deg);}
-    2% {-webkit-transform: rotate(-1deg);}
-    3.5% {-webkit-transform: rotate(1deg);}
+    2% {-webkit-transform: rotate(-3deg);}
+    3.5% {-webkit-transform: rotate(3deg);}
     5% {-webkit-transform: rotate(0deg);}
     100% {-webkit-transform: rotate(0deg);}
 }
 @keyframes rbtnWiggle {
     0% {-webkit-transform: rotate(0deg);}
-    2% {-webkit-transform: rotate(-1deg);}
-    3.5% {-webkit-transform: rotate(1deg);}
+    2% {-webkit-transform: rotate(-3deg);}
+    3.5% {-webkit-transform: rotate(3deg);}
     5% {-webkit-transform: rotate(0deg);}
     100% {-webkit-transform: rotate(0deg);}
 }
@@ -229,13 +257,10 @@ display: none;
     padding: 8px;
 }
 
-#freeSpots :nth-child(even){
+#freeSpots tr:nth-child(even){
     background-color: #f2f2f2;
 }
 
-/**#withoutParking {
-    width: 80%;
-}*/
 
 #withoutParkingContainer {
     width:90%;
@@ -260,10 +285,6 @@ display: none;
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
     padding: 2px 4px !important;
-    /*
-    background-color: crimson !important;
-    color:white !important;
-    */
     border: 1px solid darkblue !important;
 }
 .content {
@@ -318,4 +339,12 @@ display: none;
 .back{
     background-color: ghostwhite;
     padding: 20px;
+}
+
+#loginAlignment {
+  padding-left: 52px;
+}
+
+#errorMessage {
+  font-size: 18px;
 }
